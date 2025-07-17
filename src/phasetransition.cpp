@@ -18,10 +18,6 @@ TO DO:
 
 namespace PhaseTransition {
 
-// Static member definitions for dflt_PTParams
-const std::string dflt_PTParams::model = "bag";
-const std::string dflt_PTParams::nuc_type = "exp";
-
 // Universe
 Universe::Universe()
     : Universe(dflt_universe::T0, dflt_universe::Ts, dflt_universe::H0, dflt_universe::Hs, dflt_universe::g0, dflt_universe::gs) {}
@@ -63,7 +59,7 @@ const Universe& default_universe() {
 PTParams::PTParams()
     : PTParams(dflt_PTParams::vw, dflt_PTParams::alpha, dflt_PTParams::beta, dflt_PTParams::dtau, dflt_PTParams::wN, dflt_PTParams::model, dflt_PTParams::nuc_type, default_universe()) {}
 
-PTParams::PTParams(double vw, double alpha, double beta, double dtau, double wN, const std::string& model, const std::string& nuc_type, const Universe& un)
+PTParams::PTParams(double vw, double alpha, double beta, double dtau, double wN, const char* model, const char* nuc_type, const Universe& un)
     : universe_(un),
       vw_(vw),
       alpha_(alpha),
@@ -90,7 +86,7 @@ PTParams::PTParams(double vw, double alpha, double beta, double dtau, double wN,
       
       // defaults to bag model if input model is not in valid_models
       // write something that indicates other ctor should be called for Veff
-      static const std::unordered_set<std::string> valid_models = {"bag"};//, "improved bag"};
+      static const std::unordered_set<const char*> valid_models = {"bag"};//, "improved bag"};
       if (valid_models.count(model)) {
         model_ = model;
       } else {
@@ -99,7 +95,7 @@ PTParams::PTParams(double vw, double alpha, double beta, double dtau, double wN,
       }
 
       // check valid bubble nucleation type
-      static const std::unordered_set<std::string> valid_nuc = {"exp", "sim"};
+      static const std::unordered_set<const char*> valid_nuc = {"exp", "sim"};
       if (valid_nuc.count(nuc_type)) {
         nuc_type_ = nuc_type;
       } else {
@@ -116,7 +112,7 @@ PTParams::PTParams(double vw, double alpha, double beta, double dtau, double wN,
       tau_fin_ = tau_s_ + dtau_;
 
       /***** calc model-dependent quantities *****/
-      if (model_ == "bag") {
+      if (std::string(model) == "bag") {
         cpsq_ = 1.0 / 3.0;
         cmsq_ = cpsq_;
       } else {

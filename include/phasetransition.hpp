@@ -65,8 +65,8 @@ struct dflt_PTParams {
   static constexpr double alpha = 0.1;           // PT strength 
   static constexpr double beta = 1.0;            // Transition rate param
   static constexpr double dtau = 10.0;            // PT duration
-  static const std::string model;                // equation of state
-  static const std::string nuc_type;             // bubble nucleation type
+  static constexpr const char* model = "bag";    // equation of state
+  static constexpr const char* nuc_type = "exp"; // bubble nucleation type
   static constexpr double wN = 1.71;             // enthalpy at nuc temp
 };
 
@@ -81,7 +81,7 @@ struct dflt_PTParams {
   public:
     // ctors
     PTParams();
-    PTParams(double vw, double alpha, double beta, double dtau, double wN, const std::string& model, const std::string& nuc_type, const Universe& un);
+    PTParams(double vw, double alpha, double beta, double dtau, double wN, const char* model, const char* nuc_type, const Universe& un);
 
     double cpsq() const { return cpsq_; } // speed of sound squared (symmetric phase)
     double cmsq() const { return cmsq_; } // speed of sound squared (broken phase)
@@ -96,8 +96,8 @@ struct dflt_PTParams {
     double dtau() const { return dtau_; } // PT duration
     double wN() const { return wN_; } // enthalpy at nuc temp
 
-    const std::string& model() const { return model_; } // equation of state model
-    const std::string& nuc_type() const { return nuc_type_; } // bubble nucleation type
+    const char* model() const { return model_; } // equation of state model
+    const char* nuc_type() const { return nuc_type_; } // bubble nucleation type
     std::string wall_type() const { return wall_type_; } // deflagration, hybrid, or detonation
 
     // print params
@@ -107,7 +107,7 @@ struct dflt_PTParams {
   private:
       const Universe universe_;
       double vw_, alpha_, beta_, Rs_, tau_s_, tau_fin_, dtau_, cpsq_, cmsq_, vcj_, wN_;
-      std::string model_, nuc_type_;
+      const char *model_, *nuc_type_;
       std::string wall_type_;
 };
 
