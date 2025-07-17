@@ -1,11 +1,27 @@
 #include "deepphase.hpp"
 
-int main() {
+int main(int argc, char* argv[]) {
+    // Defaults
+    double vw = PhaseTransition::dflt_PTParams::vw;
+    double alN = PhaseTransition::dflt_PTParams::alpha;
+    double beta = PhaseTransition::dflt_PTParams::beta;
+    double dtau = PhaseTransition::dflt_PTParams::dtau;
+    const auto wN = PhaseTransition::dflt_PTParams::wN;
+    const auto model = PhaseTransition::dflt_PTParams::model;
+    const auto nuc_type = PhaseTransition::dflt_PTParams::nuc_type;
+
+    if (argc == 4) {
+        alN = std::stod(argv[1]);
+        beta = std::stod(argv[2]);
+        vw = std::stod(argv[3]);
+        dtau = 1/beta;
+    }
 
     const PhaseTransition::Universe un;
-
-    const PhaseTransition::PTParams params(0.5, 0.1, 1.0, 10.0, 1.71, "bag", "exp", un);
-
+    const PhaseTransition::PTParams params(vw, alN, beta, dtau, wN, model, nuc_type, un);
+    if(argc == 4) {
+        params.print();
+    }
     const Hydrodynamics::FluidProfile profile(params);
 
     profile.write("fluid_profile.csv");
