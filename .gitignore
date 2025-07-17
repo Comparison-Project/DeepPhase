@@ -1,0 +1,58 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Directories
+/build/
+/bin/
+/lib/
+/CMakeFiles/
+
+# CMakeJunk
+cmake_install.cmake
+CMakeCache.txt
+
+
+# Output files
+*.csv
+*.png
+*.jpg
+
+# Visual Studio
+.vscode/
+
+# Python
+/.ipynb_checkpoints/
+*.ipynb
+
+# Matplotlibcpp
+/include/matplotlibcpp.h
